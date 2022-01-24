@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let computerScore = 0;
+        let playerScore = 0;
+        let computerChoice = ['Rock','Paper','Scissors'];
+        function computerPlay () {
+            let randomChoice = Math.floor(Math.random() * 3);
+            return computerChoice[randomChoice];
+        }
+        function game() {
+
+            function playRound(playerSelection, computerSelection){
+            let results;
+            switch(playerSelection.toLowerCase() + computerSelection){
+                case 'scissorsPaper':
+                case 'paperRock':
+                case 'rockScissors':
+                    playerScore++;
+                    return `User Wins: ${playerSelection} beats ${computerSelection} ${playerScore}:${computerScore}`
+
+                    break;
+                case 'rockPaper':
+                case 'scissorsRock':
+                case 'paperScissors':
+                    computerScore++;
+                    return `User Lost: ${playerSelection} loses to ${computerSelection} ${playerScore}:${computerScore}`
+                    break;
+                case 'rockRock':
+                case 'scissorsScissors':
+                case 'paperPaper':
+                    return `Draw! ${playerSelection} Equals to ${computerSelection} ${playerScore}:${computerScore}`
+                    break;
+            }
+        }
+        const playerSelection = window.prompt ('Rock? Paper? Scissors?')
+        const computerSelection = computerPlay();
+        console.log(playRound(playerSelection, computerSelection));
+        }
+        game();
+        game();
+        game();
+        game();
+        game();
+        
+    </script>
+</body>
+</html>
