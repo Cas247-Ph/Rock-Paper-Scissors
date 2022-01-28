@@ -1,14 +1,14 @@
 let playerScore = 0;
 let computerScore =0;
 
-
+//computer Choice
 function computerPlay (){
     const randomNum = ~~(Math.random()*3);
     if(randomNum === 0) return 'circle';
     if(randomNum === 1) return 'triangle';
     if(randomNum === 2) return 'square';
 }
-
+//compare choices
 function compareRound(getChoiceId,getComputerChoice){
     if(getChoiceId === getComputerChoice){
         return 'draw'
@@ -37,7 +37,7 @@ function modalPopup (playerScore, computerScore){
         matchWinner(playerScore,computerScore)
     }
 }
-
+//Play game
 function catchEvent (e){
     const getChoiceId= e.target.id;
     const getComputerChoice= computerPlay();
@@ -48,8 +48,7 @@ function catchEvent (e){
     userScoreSpan.innerText = `${playerScore}`
     compScoreSpan.innerText = `${computerScore}`
 }
-
-//testground function
+//Display computer Choice per round.
 function showComputerChoice(roundWinner, getComputerChoice){
     if(roundWinner === 'player'){
         results.innerText = 'YOU WIN!'
@@ -70,10 +69,10 @@ function showComputerChoice(roundWinner, getComputerChoice){
         showShape(getComputerChoice)
     }
 }
-
+//display computer choice Icon per round
 function showShape(getComputerChoice){
     if(getComputerChoice === 'circle'){
-        Showshapes.innerHTML = `<p><ion-icon name="ellipse-outline"></ion-icon></p>`
+        Showshapes.innerHTML = `<ion-icon name="ellipse-outline"></ion-icon>`
     }
     if(getComputerChoice === 'triangle'){
         Showshapes.innerHTML =`<ion-icon name="triangle-outline"></ion-icon>`
@@ -82,7 +81,7 @@ function showShape(getComputerChoice){
         Showshapes.innerHTML =`<ion-icon name="square-outline"></ion-icon>`
     }
 }
-
+//modal endgame announcement
 function matchWinner (playerScore, computerScore){
     if(playerScore === 5){
         showMatchWin.innerText = `YOU WON THE MATCH`
@@ -94,7 +93,7 @@ function matchWinner (playerScore, computerScore){
         showMatchWin.style.color = `#F44786`
     }
 }
-
+//DOM
 const playerChoice = document.querySelectorAll('[data-choice]')
 const userScoreSpan = document.getElementById('userScore')
 const compScoreSpan = document.getElementById('compScore')
@@ -105,6 +104,8 @@ const chompChoose = document.getElementById('compChose')
 const Showshapes = document.getElementById('shape')
 const showWin = document.getElementById('roundWin')
 const showMatchWin = document.getElementById('matchWin')
+
+//Evenlisteners
 retryBtn.addEventListener('click', () => {
     window.location.reload();
 })
