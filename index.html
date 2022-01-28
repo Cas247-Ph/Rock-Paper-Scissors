@@ -4,52 +4,159 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="modal.css">
+    <script src="app.js" defer></script>
 </head>
 <body>
-    <script>
-        let computerScore = 0;
-        let playerScore = 0;
-        let computerChoice = ['Rock','Paper','Scissors'];
-        function computerPlay () {
-            let randomChoice = Math.floor(Math.random() * 3);
-            return computerChoice[randomChoice];
-        }
-        function game() {
+    <div class="container">
+        <header>
+            <h1>Squid Game</h1>
+            <h2>Rock Paper Scissors</h2>
+        </header>
+        <div class="scoreBoard">
+            <div id="userLabel" class="labelUser">You</div>
+            <div id="compLabel" class="labelComp">Computer</div>
+            <span id="userScore" >0</span> :
+            <span id="compScore" >0</span>
+        </div>
+    
+        <div class="choices">
+            <div class="choice" data-choice="circle">
+                <ion-icon id="circle" name="ellipse-outline"></ion-icon>
+            </div>
+            <div class="choice" data-choice="triangle">
+                <ion-icon id="triangle" name="triangle-outline"></ion-icon>
+            </div>
+            <div class="choice" data-choice="square">
+                <ion-icon id="square"name="square-outline"></ion-icon>
+            </div>
+        </div>
+    
+        <div class="beats">
+            <div class="instruct">
+                <p>
+                    <span class="win">Circle</span> Beats <span class="lost">Triangle</span>
+                </p>
+            </div>
+            <div class="instruct">
+                <p>
+                    <span class="win">Triangle</span> Beats <span class="lost">Square</span>
+                </p>
+            </div>
+            <div class="instruct">
+                <p>
+                    <span class="win">Square</span> Beats <span class="lost">Circle</span>
+                </p>
+            </div>
+            
+        </div>
+        <div class="result">
+            <h3>Make your move!</h3>
+            <div id="roundWin"></div>
+            <h4 id="shape"></h4>
+            <p id="compChose"></p>
+        </div>
+    </div>
 
-            function playRound(playerSelection, computerSelection){
-            let results;
-            switch(playerSelection.toLowerCase() + computerSelection){
-                case 'scissorsPaper':
-                case 'paperRock':
-                case 'rockScissors':
-                    playerScore++;
-                    return `User Wins: ${playerSelection} beats ${computerSelection} ${playerScore}:${computerScore}`
+   <div id= "modalContainer" class="modal-container">
+    <div class="modal">
+        <div id="result" class="modal-content">
+            <h1 id= 'matchWin' class='matchColor'></h1>
+            <span class="icons">
+                <ion-icon id="circle" name="ellipse-outline"></ion-icon>
+                <ion-icon id="triangle" name="triangle-outline"></ion-icon>
+                <ion-icon id="square"name="square-outline"></ion-icon>
+            </span>
+            <div class="retrybtn">
+                <button class="retry">Play Again?</button>
+                
+            </div>
+        </div>
+    </div>
+   </div>
 
-                    break;
-                case 'rockPaper':
-                case 'scissorsRock':
-                case 'paperScissors':
-                    computerScore++;
-                    return `User Lost: ${playerSelection} loses to ${computerSelection} ${playerScore}:${computerScore}`
-                    break;
-                case 'rockRock':
-                case 'scissorsScissors':
-                case 'paperPaper':
-                    return `Draw! ${playerSelection} Equals to ${computerSelection} ${playerScore}:${computerScore}`
-                    break;
-            }
-        }
-        const playerSelection = window.prompt ('Rock? Paper? Scissors?')
-        const computerSelection = computerPlay();
-        console.log(playRound(playerSelection, computerSelection));
-        }
-        game();
-        game();
-        game();
-        game();
-        game();
-        
-    </script>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
 </body>
 </html>
+
+<!--
+
+    let player = 0;
+    let comp = 0;
+
+const choices = document.querySelectorAll('[data-choice')
+const userScoreSpan = document.getElementById('userScore')
+const compScoreSpan = document.getElementById('compScore')
+const modal = document.getElementById('modalContainer')
+const retryButton = document.querySelector('retrybtn')
+//computer randomly chooses between RPS
+function computerPlay () {
+    const randomNum = Math.floor(Math.random()*3);
+    if(randomNum === 0) return 'circle';
+    if(randomNum === 1) return 'square';
+    if(randomNum === 2) return 'triangle';
+}
+
+//logic for determining winner
+function playRound(playerSelection, computerSelection) {
+    if(playerSelection === computerSelection){
+        return 'draw'
+    }
+    if(
+        (playerSelection === 'circle' && computerSelection === 'triangle')||
+        (playerSelection === 'triangle' && computerSelection === 'square')||
+        (playerSelection === 'square' && computerSelection === 'circle')
+    ) {
+            return 'player'
+    }
+    if(
+        (computerSelection === 'circle' && playerSelection === 'triangle')||
+        (computerSelection === 'triangle' && playerSelection === 'square')||
+        (computerSelection === 'square' && playerSelection === 'circle')
+        ) {
+            return 'comp'
+        }
+  };
+  //show Winner
+ function incrementScore (iscore){
+    iscore.innerText = parseInt(iscore.innerText)+1;
+ }
+  //Gameplay
+  function eventCatch(e) {
+      const playerChoice = e.target.id;
+      const computerChoice = computerPlay();
+      const roundWinner= playRound(playerChoice, computerChoice)
+      if((player===5)||(comp === 5)){
+        modal.style.display = 'block'
+    }else{
+        if(roundWinner === 'player'){
+            player++
+          }else if( roundWinner === 'comp'){
+              comp++;
+          }
+          userScoreSpan.textContent = player;
+          compScoreSpan.textContent = comp;
+      }
+      clearModal();
+    }
+      
+    function clearModal(){
+        retryButton.addEventListener('click',() => {
+            window.location.reload
+        });
+    }
+
+
+
+
+  //event listeners
+  choices.forEach(eventStart => eventStart.addEventListener('click',eventCatch))
+  console.log(choices)
+
+-->
